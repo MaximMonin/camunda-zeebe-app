@@ -1,0 +1,95 @@
+uk:
+  activerecord:
+    attributes:
+      user:
+        username: Ім'я користувача
+        phone: Телефон
+      chat:
+        name: Назва
+  devise:
+    registrations:
+      edit:
+        phone_confirmed: Телефон підтверджений
+        header: Профіль користувача
+        change_avatar: Змінити аватар
+        confirm_phone: Підтвердити телефон
+        enter_code: Введіть код
+        send_code: Послати код
+        sms_code_is_not_valid: Код СМС не вірний
+        linked_accounts: Пов'язані облікові записи
+        link_social_account: Зв'язати обліковий запис з соціальною мережею
+        remove_this_account: Видалити цей обліковий запис
+        remove_message1: Ви впевнені що хочете видалити зв'язок з цією соціальною мережею?
+        remove_message2: Видалення останнього облікового запису соціальної мережі може призвести до блокування вашого облікового запису, якщо ви не знаєте email/пароль вашої локального облікового запису!
+      new:
+        sign_up_with: Реєстрація через
+    sessions:
+      new: 
+        sign_in_with: Увійти через
+  welcome:
+    index:
+      welcome_to_app: Ласкаво просимо в програму, що працює з Camunda и Zeebe
+  layouts:
+    navbar:
+      sign_in: Увійти
+      sign_up: Реєстрація
+      profile: Профіль
+      my_files: Мої файли
+      chat_rooms: Кімнати спілкування
+      logout: Вийти
+      language: Мова
+      english: English
+      russian: Русский
+      ukranian: Українська
+  chats:
+    chats:
+      create_a_chat_room: Створити кімнату спілкування
+      edit_chat_room: Редагувати кімнату спілкування
+      there_are_no_chat_rooms: Немає кімнат для спілкування
+      search: Пошук
+    form:
+      save: Зберегти
+    edit:
+      edit_chat: Редагувати кімнату
+    index:
+      welcome_to_chat: Ласкаво просимо в кімнати спілкування
+      chat_instruction: Підключіться до однієї з кімнат або створіть нову
+      no_messages_found: Не знайдено жодного повідомлення за запитом
+      search_results: Результати пошуку
+      user: Користувач
+      message: Повідомлення
+      chat: Чат
+      when: Коли
+      action: Дія
+      view: Дивитися
+    new:
+      new_chat_room: Нова кімната спілкування
+  user_files:
+    index:
+      my_files: Мої файли
+      update_files: Оновити файли
+      edit_mode: Режим редагування
+      my_photos: Мої фотографії
+      my_videos: Мої відео
+      my_documents: Мої документи
+      upload_new_files: Завантажити нові файли
+      files_upload: Завантаження файлів
+      upload_instructions: Натисніть або перетягніть файли
+      file_too_big: Файл занадто великий (макс 500Mb)
+      upload_error: Помилка завантаження
+      cancel_upload: Скасувати завантаження
+      are_you_sure_you_want_to_cancel_upload: Ви впевнені що хочете скасувати завантаження?
+      upload_canceled: Завантаження скасовано
+      delete_upload: Видалити файл
+  socials:
+    create:
+      signed_in_successfully_via: Успішно увійшли через
+      sign_in_via: Вхід через
+      has_been_added_to_your_account: доданий до вашого облікового запису
+      signed_in_successfully: Вхід успішний!
+      your_account_has_been_created_via: Ваш обліковий запис створено через
+      createinfo: У вашому профілі ви можете змінити вашу персональну інформацію і додати локальний пароль
+      error_no_email: не може бути використаний для реєстрації так як адреса пошти не була надана. Будь ласка, використовуйте інший спосіб або локальну реєстрацію. Якщо у вас вже є обліковий запис і ви увійшли, то можете навіть без наявності пошти зв'язати облікові записи з
+      error_no_email2: з вашого профілю.
+      error_invalid_uid: Повернуто невірні дані в яких немає ідентифікатора користувача
+      is_already_linked_to_your_account: вже прив'язаний до вашого облікового запису

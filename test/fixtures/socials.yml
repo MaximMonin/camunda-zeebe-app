@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  provider: facebook
+  uid: facebookuid
+  username: facebook name
+  email: facebok@email
+
+two:
+  user: one
+  provider: google
+  uid: googleuid
+  username: Mgoogle name
+  email: google@email

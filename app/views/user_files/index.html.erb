@@ -1,0 +1,120 @@
+<div class="container">
+   <div class="col-md-12">
+     <div class="row filetop">
+       <h4><%= t(".my_files") %></h4>
+       <div class="btnupdate">
+           <button type="button" id="UpdateFiles" class="btn btn-primary btn-sm" onclick="event.preventDefault(); Event.emit('newfileadded', {});"><%= t(".update_files") %></button>
+       </div>  
+       <div class="form-check ml-auto">
+           <input type="checkbox" class="form-check-input" id="EditMode" onclick="if (this.checked) {Event.emit('fileseditmode', {})} else {Event.emit('filesviewmode', {})};">
+           <label class="form-check-label" for="EditMode"><%= t(".edit_mode") %></label>
+       </div>  
+     </div>
+   </div>
+   <ul class="nav nav-tabs">
+     <li class="nav-item">
+       <a class="nav-link active" dusk="photo-tab" data-toggle="tab" href="#photo"><%= t(".my_photos") %></a>
+     </li>
+     <li class="nav-item">
+       <a class="nav-link" dusk="video-tab" data-toggle="tab" href="#video"><%= t(".my_videos") %></a>
+     </li>
+     <li class="nav-item">
+       <a class="nav-link" dusk="doc-tab" data-toggle="tab" href="#docs"><%= t(".my_documents") %></a>
+     </li>
+     <li class="nav-item">
+       <a class="nav-link" dusk="upload-tab" data-toggle="tab" href="#upload" onclick="Dropzone.forElement('#documentDropzone').files.forEach(function(file) { 
+                                                                     file.previewElement.remove(); });"><%= t(".upload_new_files") %></a>
+     </li>
+   </ul>
+   <div class="tab-content">
+     <div class="tab-pane fade show active" id="photo">
+       <div class="myfiles2">
+         <my-photo></my-photo>
+       </div>
+     </div>
+     <div class="tab-pane fade" id="video">
+       <div class="myfiles2">
+         <my-video></my-video>
+       </div>
+     </div>
+     <div class="tab-pane fade" id="docs">
+       <div class="myfiles2">
+         <my-docs></my-doc>
+       </div>
+     </div>
+     <div class="tab-pane fade" id="upload">
+       <div class="myfiles">
+         <h5 class="page-heading"><%= t(".files_upload") %></h5>
+         <form method="post" action='/upload/local?todo=SaveMyFiles'
+                  enctype="multipart/form-data" class="dropzone" id="documentDropzone">
+                <div class="dz-message">
+                    <div class="col-xs-8">
+                        <div class="message">
+                            <p><%= t(".upload_instructions") %></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fallback">
+                    <input type="file" name="file" multiple>
+                </div>
+         </form>
+       </div>
+     </div>
+   </div>
+</div>
+
+<% content_for :js do %>
+<script>
+  Event.listen('filedeleted', () => {
+     document.getElementById('UpdateFiles').click();
+  });
+
+  var uploadedDocumentMap = {};
+  var csrf = '';
+  if (document.querySelector("meta[name='csrf-token']")) {
+    csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+  }
+
+  Dropzone.options.documentDropzone = {
+    url: '/upload/local?todo=SaveMyFiles',
+    parallelUploads: 3,
+    maxFilesize: 500, // MB
+    chunking: false,
+    chunkSize: 1000000, // Bytes 
+    timeout: 300 * 1000, // 5 minutes
+    parallelChunkUploads: false, 
+    retryChunks: false,
+    retryChunksLimit: 3,
+    addRemoveLinks: true,
+    dictFileTooBig: '<%= t(".file_too_big") %>',
+    dictResponseError: '<%= t(".upload_error") %>',
+    dictCancelUpload: '<%= t(".cancel_upload") %>',
+    dictCancelUploadConfirmation: '<%= t(".are_you_sure_you_want_to_cancel_upload") %>',
+    dictUploadCanceled: '<%= t(".upload_canceled") %>',
+    dictRemoveFile: '<%= t(".delete_upload") %>',
+    headers: {
+      'X-CSRF-TOKEN': csrf
+    },
+    success: function (file, response) {
+      if (response.name) {
+        uploadedDocumentMap[file.name] = JSON.stringify(response)
+      }
+      Event.emit('newfileadded', {});
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var filedata = ''
+      filedata = JSON.parse(uploadedDocumentMap[file.name])
+      if (filedata.name) {
+        axios.post('/upload/local/delete', { 'file': filedata.path + '/' + filedata.name}).then(response => {});
+      }
+      if (filedata.preview) {
+        axios.post('/upload/local/delete', { 'file': filedata.path + '/' + filedata.preview}).then(response => {});
+      }
+      Event.emit('newfileadded', {});
+    },
+    init: function () {
+    }
+  }
+</script>
+<% end %>

@@ -1,0 +1,95 @@
+ru:
+  activerecord:
+    attributes:
+      user:
+        username: Имя пользователя
+        phone: Телефон
+      chat:
+        name: Название
+  devise:
+    registrations:
+      edit:
+        phone_confirmed: Телефон подтвержден
+        header: Профиль пользователя
+        change_avatar: Изменить аватар
+        confirm_phone: Подтвердить телефон
+        enter_code: Введите код
+        send_code: Послать код
+        sms_code_is_not_valid: Код СМС не верный
+        linked_accounts: Связанные учетные записи
+        link_social_account: Связать учетную запись с социальной сетью
+        remove_this_account: Удалить эту учетную запись
+        remove_message1: Вы уверены что хотите удалить связь с этой социальной сетью?
+        remove_message2: Удаление последней учетной записи социальной сети может привести к блокировке вашей учетной записи, если вы не знаете email/пароль вашей локальной учетной записи!
+      new:
+        sign_up_with: Зарегистрироваться через
+    sessions:
+      new: 
+        sign_in_with: Войти через
+  welcome:
+    index:
+      welcome_to_app: Добро пожаловать в приложение работающее с Camunda и Zeebe
+  layouts:
+    navbar:
+      sign_in: Войти
+      sign_up: Регистрация
+      profile: Профиль
+      my_files: Мои файлы
+      chat_rooms: Комнаты общения
+      logout: Выйти
+      language: Язык
+      english: English
+      russian: Русский
+      ukranian: Українська
+  chats:
+    chats:
+      create_a_chat_room: Создать комнату общения
+      edit_chat_room: Редактировать комнату общения
+      there_are_no_chat_rooms: Нет комнат общения
+      search: Поиск
+    form:
+      save: Сохранить
+    edit:
+      edit_chat: Редактировать комнату
+    index:
+      welcome_to_chat: Добро пожаловать в комнаты общения
+      chat_instruction: Подключитесь к одной из комнат или создайте новую
+      no_messages_found: Не найдено ни одного сообщения по запросу
+      search_results: Результаты поиска
+      user: Пользователь
+      message: Сообщение
+      chat: Чат
+      when: Когда
+      action: Действие
+      view: Смотреть
+    new:
+      new_chat_room: Новая комната общения
+  user_files:
+    index:
+      my_files: Мои файлы
+      update_files: Обновить файлы
+      edit_mode: Режим редактирования
+      my_photos: Мои фотографии
+      my_videos: Мои Видео
+      my_documents: Ми документы
+      upload_new_files: Загрузить новые файлы
+      files_upload: Загрузка файлов
+      upload_instructions: Нажмите или перетащите файлы
+      file_too_big: Файл слишком большой (макс 500Mb)
+      upload_error: Ошибка загрузки
+      cancel_upload: Отменить загрузку
+      are_you_sure_you_want_to_cancel_upload: Вы уверены что хотите отменить загрузку?
+      upload_canceled: Загрузка отменена
+      delete_upload: Удалить файл
+  socials:
+    create:
+      signed_in_successfully_via: Успешно вошли через
+      sign_in_via: Вход через
+      has_been_added_to_your_account: добавлен к вашей учетной записи
+      signed_in_successfully: Вход успешен!
+      your_account_has_been_created_via: Ваша учетная запись создана через
+      createinfo: В вашем профиле вы можете изменить вашу персональную информацию и добавить локальный пароль
+      error_no_email: не может быть использован для регистрации так как адрес почты не был предоставлен. Пожалуйста используйте другой способ или локальную регистрацию. Если у вас уже есть учетная запись и вы вошли, то можете даже без наличия почты связать учетные записи с
+      error_no_email2: из вашего профиля.
+      error_invalid_uid: Возвращены неверные данные в которых нет идентификатора пользователя
+      is_already_linked_to_your_account: уже привязан к вашей учетной записи

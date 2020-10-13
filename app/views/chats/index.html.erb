@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-12 col-md-3">
+    <%= render partial: 'chats' %>
+  </div>
+
+  <div class="col">
+    <div class="alert alert-primary">
+      <h4 class="alert-heading">
+        <%= t(".welcome_to_chat") %>
+      </h4>
+      <p>
+        <%= t(".chat_instruction") %>
+      </p>
+    </div>
+    <% unless @messages.nil? %>
+      <p>
+      </p>
+      <% if @messages.empty? %>
+        <h5><%= t(".no_messages_found") %>: <%= params[:search][:query] %></h5>
+      <% else %>
+      <h5><%= t(".search_results") %>:</h5>
+      <table style="width: 100%;">
+        <thead>
+          <tr>
+            <th><%= t(".user") %></th>
+            <th><%= t(".message") %></th>
+            <th><%= t(".chat") %></th>
+            <th><%= t(".when") %></th>
+            <th><%= t(".action") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @messages.each do |message| %>
+          <tr>
+            <td><%= message.username %></td>
+            <td><%= message.message %></td>
+            <td><%= message.chatname %></td>
+            <td><%= message.created_at %></td>
+            <td><%= link_to t(".view"), chat_path(message.chat_id) %></td>
+          </tr>
+          <% end %>
+        <tbody>
+      </table>
+      <% end %>
+    <% end %>
+  </div>
+</div>

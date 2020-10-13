@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ruby on rails</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_pack_tag 'application' %>
+    <%= javascript_pack_tag 'vendor' %>
+    <% if content_for?(:head) %>
+       <%= yield :head%>
+    <% end %>
+  </head>
+  <body>
+    <div id="app">
+      <init-store></init-store>
+      <%= render partial: 'layouts/navbar' %>
+      <main class="py-4">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <% if notice %>
+                <p class="notice"><%= notice %></p>
+              <% end %>
+              <% if alert %>
+                <p class="alert"><%= alert %></p>
+              <% end %>
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <%= javascript_pack_tag 'application' %>
+    <% if content_for?(:js) %>
+       <%= yield :js%>
+    <% end %>
+  </body>
+</html>

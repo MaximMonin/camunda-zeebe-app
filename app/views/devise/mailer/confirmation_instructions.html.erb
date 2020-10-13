@@ -1,0 +1,5 @@
+<h4><%= t('.greeting', recipient: @email) %></h4>
+
+<p><%= t('.instruction') %></p>
+
+<p><%= link_to t('.action'), confirmation_url(@resource, confirmation_token: @token) %></p>

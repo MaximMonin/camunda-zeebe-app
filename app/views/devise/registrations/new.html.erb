@@ -1,0 +1,42 @@
+<h2><%= t(".sign_up") %></h2>
+
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "card", style: "padding: 20px" }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :email,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "email" }%>
+    <%= f.input :username, 
+                required: true,
+                input_html: { autocomplete: "name" }%>
+    <%= f.input :password,
+                required: true,
+                hint: (t('devise.shared.minimum_password_length', count: @minimum_password_length) if @minimum_password_length),
+                input_html: { autocomplete: "new-password" } %>
+    <%= f.input :password_confirmation,
+                required: true,
+                input_html: { autocomplete: "new-password" } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, t(".sign_up"), class: 'btn btn-primary' %>
+  </div>
+
+  <div id="remote" class="container social-box">
+       <label class="label-bold">
+         <%= t(".sign_up_with") %>
+       </label>
+       <div id="services" class="box">
+           <a href="/auth/facebook" class="social-item"><%= image_tag "facebook_64.png", :size => "64x64", :style => "padding: 5px", :alt => "Facebook" %>Facebook</a>
+           <a href="/auth/google" class="social-item"><%= image_tag "google_64.png", :size => "64x64", :style => "padding: 5px", :alt => "Google" %>Google</a>
+           <a href="/auth/twitter" class="social-item"><%= image_tag "twitter_64.png", :size => "64x64", :style => "padding: 5px", :alt => "Twitter" %>Twitter</a>
+           <a href="/auth/vkontakte" class="social-item"><%= image_tag "vkontakte_64.png", :size => "64x64", :style => "padding: 5px", :alt => "Vkontakte" %>Vkontakte</a>
+           <a href="/auth/github" class="social-item"><%= image_tag "github_64.png", :size => "64x64", :style => "padding: 5px", :alt => "Github" %>Github</a>
+       </div>
+  </div>
+
+<% end %>
+
+<%= render "devise/shared/links" %>

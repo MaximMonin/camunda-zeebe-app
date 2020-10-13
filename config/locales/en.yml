@@ -1,0 +1,126 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+en:
+  activerecord:
+    attributes:
+      user:
+        username: User name
+        phone: Phone
+      chat:
+        name: Name
+  devise:
+    registrations:
+      edit:
+        phone_confirmed: Phone Confirmed
+        header: User Profile
+        change_avatar: Change Avatar
+        confirm_phone: Confirm Phone
+        enter_code: Enter Code
+        send_code: Send Code
+        sms_code_is_not_valid: Sms code is not valid
+        linked_accounts: Linked accounts
+        link_social_account: Link social account
+        remove_this_account: Remove this account
+        remove_message1: Are you sure you want to remove link to social network?
+        remove_message2: Removing the last account linked might lock you out of your account if you do not know the email/password sign-in of your local account!
+      new:
+        sign_up_with: Sign up with
+    sessions:
+      new: 
+        sign_in_with: Sign in with
+  welcome:
+    index:
+      welcome_to_app: Welcome to Camunda and Zeebe app
+  layouts:
+    navbar:
+      sign_in: Sign In
+      sign_up: Sign Up
+      profile: Profile
+      my_files: My files
+      chat_rooms: Chat Rooms
+      logout: Logout
+      language: Language
+      english: English
+      russian: Русский
+      ukranian: Українська
+  chats:
+    chats:
+      create_a_chat_room: Create chat room
+      edit_chat_room: Edit chat room
+      there_are_no_chat_rooms: There are no chat rooms
+      search: Search
+    form:
+      save: Save
+    edit:
+      edit_chat: Edit room
+    index:
+      welcome_to_chat: Welcome to chat
+      chat_instruction: Join a chat room or create new chat room
+      no_messages_found: No messages found matching your query
+      search_results: Search results
+      user: User
+      message: Message
+      chat: Chat
+      when: When
+      action: Action
+      view: View
+    new:
+      new_chat_room: New Chat Room
+  user_files:
+    index:
+      my_files: My files
+      update_files: Update files
+      edit_mode: Edit Mode
+      my_photos: My photos
+      my_videos: My videos
+      my_documents: My documents
+      upload_new_files: Upload new files
+      files_upload: Files upload
+      upload_instructions: Click or drag and drop files
+      file_too_big: File too big (max 500Mb)
+      upload_error: Upload error
+      cancel_upload: Cancel upload
+      are_you_sure_you_want_to_cancel_upload: Are you sure you want to cancel upload?
+      upload_canceled: Upload Canceled
+      delete_upload: Delete Upload
+  socials:
+    create:
+      signed_in_successfully_via: Signed in successfully via
+      sign_in_via: Sign in via
+      has_been_added_to_your_account: has been added to your account
+      signed_in_successfully: Signed in successfully!
+      your_account_has_been_created_via: Your account has been created via
+      createinfo: In your profile you can change your personal information and add a local password.
+      error_no_email: can not be used to sign-up as no valid email address has been provided. Please use another authentication provider or use local sign-up. If you already have an account, please sign-in and add
+      error_no_email2: from your profile.
+      error_invalid_uid: returned invalid data for the user id.
+      is_already_linked_to_your_account: is already linked to your account

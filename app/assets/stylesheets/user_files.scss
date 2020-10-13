@@ -1,0 +1,41 @@
+// Place all the styles related to the UserFiles controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+page-heading {
+	    margin: 20px 0;
+	    color: #666;
+	    -webkit-font-smoothing: antialiased;
+	    font-family: "Segoe UI Light", "Arial", serif;
+	    font-weight: 600;
+	    letter-spacing: 0.05em;
+}
+ 
+#documentDropzone .message {
+	    font-family: "Segoe UI Light", "Arial", serif;
+	    font-weight: 600;
+	    color: #0087F7;
+	    font-size: 1.5em;
+	    letter-spacing: 0.05em;
+}
+ 
+.dropzone {
+	    border: 2px dashed #0087F7;
+	    background: white;
+	    border-radius: 15px;
+	    min-height: 300px;
+	    padding: 90px 0;
+	    vertical-align: baseline;
+}
+.myfiles {
+	    padding: 10px;
+}
+.myfiles2 {
+    padding-top: 10px;
+}
+.btnupdate {
+    padding-left: 30px;
+}
+.filetop {
+    padding-bottom: 10px;
+}

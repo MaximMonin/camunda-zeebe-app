@@ -1,0 +1,30 @@
+<div class="mb-3">
+  <%= link_to new_chat_path, class: "btn btn-primary" do %>
+    <%= t(".create_a_chat_room") %>
+  <% end %>
+</div>
+<%= form_for :search, url: search_chats_path, method: :get do |form| %>
+    <div style="margin-bottom: 10px; display: flex;">
+      <%= form.text_field :query, class: "form-control string required", value: params[:search].presence && params[:search][:query] %>
+      <button class="btn btn-primary" style="margin-left: 5px;"><i class="fas fa-search"></i></button>
+    </div>
+<% end %>
+
+<% if @chats.present? %>
+  <nav class="nav flex-column">
+    <% @chats.each do |chat| %>
+      <%= link_to chat.name, chat_path(chat), class: "nav-link room-nav-link" %>
+    <% end %>
+  </nav>
+  <% if @chat.present? %>
+    <div class="mb-3">
+      <%= link_to edit_chat_path do %>
+        <%= t(".edit_chat_room") %>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="text-muted">
+    <%= t(".there_are_no_chat_rooms") %>
+  </div>
+<% end %>

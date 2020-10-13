@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-12 col-md-3">
+    <%= render partial: 'chats' %>
+  </div>
+
+  <div class="col">
+    <h2>
+        <%= @chat.name %>
+    </h2>
+    <div class="border panel-body" id="chatContainer">
+       <chat-messages :chat="<%= @chat.id %>"></chat-messages>
+    </div>
+    <div class="panel-footer">
+        <chat-form :chat="<%= @chat.id %>"></chat-form>
+    </div>
+  </div>
+</div>
+
+<% content_for :js do %>
+    <script>      
+       window.addEventListener("resize", onResize);
+       onResize();
+       function onResize() {
+         var element = document.getElementById("chatContainer");
+         var rect = document.getElementById("chatContainer").getBoundingClientRect();
+         console.log (rect);
+         var calcheight = window.innerHeight - rect.top - 70;
+         if (calcheight < 100) {
+            calcheight = 100;
+         }
+         element.style.height = calcheight + "px";
+       }
+    </script>      
+<% end %>

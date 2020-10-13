@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" id="appBar">
+    <div class="container">
+        <!-- Right Side Of Navbar -->
+        <a href="/camunda"><%= image_tag "camunda-brand.svg", :size => "96x33" %>
+        </a>
+        <a href="/zeebe"><%= image_tag "zeebe-brand.svg", :size => "96x33" %>
+        </a>
+        <ul class="navbar-nav ml-auto">
+            <!-- Authentication Links -->
+            <% if !current_user %>
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="/users/sign_in"><%= t(".sign_in") %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="/users/sign_up"><%= t(".sign_up") %></a>
+                    </li>
+            <% else %>
+                <li class="nav-item dropdown">
+                    <% if current_user.avatar %>
+                       <img class="centered-and-cropped" width="30" height="30" style="border-radius:50%" src="<%= current_user.avatar %>"> 
+                    <% end %>
+                    <a id="navbarDropdown" class="navbar-brand dropdown-toggle" dusk="user-button" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <%= current_user.username %> <span class="caret"></span>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/users/edit">
+                            <%= t(".profile") %>
+                        </a>
+                        <%= link_to t(".logout"), destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+                    </div>
+                </li>
+            <% end %>
+            <li class="nav-item dropdown">
+                <a id="navbarDropdown" class="navbar-brand dropdown-toggle" dusk="lang-button" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= t(".language") %>   <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" data-method="get" href="/locale/en">
+                         <%= t(".english") %>   
+                        </a>
+                        <a class="dropdown-item" data-method="get" href="/locale/ru">
+                          <%= t(".russian") %>
+                        </a>
+                        <a class="dropdown-item" data-method="get" href="/locale/uk">
+                          <%= t(".ukranian") %>  
+                        </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

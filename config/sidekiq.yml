@@ -1,0 +1,10 @@
+:verbose: false
+:timeout: 600
+
+:concurrency: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+:queues:
+  - [default, 3]
+  - [mailers, 1]
+  - [active_storage_analysis, 1]
+  - [active_storage_purge, 1]
+  - [low_priority, 1]
