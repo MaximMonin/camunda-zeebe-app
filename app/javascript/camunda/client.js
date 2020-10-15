@@ -10,7 +10,6 @@ class CamundaClient {
     this.processId = null;
     this.businessKey = null;
     this.processKey = null;
-    this.workers = array ();
   };
   async startProcess(ProcessKey, Variables, callback) {
     this.processKey = ProcessKey;
@@ -45,3 +44,7 @@ class CamundaClient {
     });
   };
 };
+
+export {
+  CamundaClient
+}
