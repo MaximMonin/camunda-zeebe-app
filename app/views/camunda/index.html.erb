@@ -1,0 +1,45 @@
+<h4><%= t(".camunda_header") %></h4>
+<div class="container social-box" style="margin-top: 10px; padding: 5px">
+  <div class="col-md-12">
+    <div class="row">
+      <label class="col-sm-2 text-sm-right" style="padding-right: 30px; padding-top=15px; margin-top: 8px" ><%= t(".domain_name") %>:</label>
+      <input type="input" id="domain_name" style="margin-right: 10px" required="required" aria-required="true" type="text" class="form-control integer required col-sm-3"></input>
+      <button type="button" id="verifyphone" class="btn btn-primary" onclick="event.preventDefault(); 
+                                               axios.post('/users/verifyphone',
+                                               { 'otp': document.getElementById('otp').value })
+                                               .then(response => {
+                                                 if (response.data.status == 'wrong code') {
+                                                    document.getElementById('otperror').style.display = 'block';
+                                                 }
+                                                 else {
+                                                   document.getElementById('smsblock').style.display = 'none';
+                                                 }
+                                               });
+                                                "><%= t(".search") %>
+      </button>
+    </div>
+    <label class="col-sm-2 text-sm-right" style="padding-right: 40px; padding-top=15px; margin-top: 8px" ><%= t(".domains") %>:</label>
+    <div class="container social-box" style="margin-top: 0px; padding: 5px">
+       <div id="domains" class="box">
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.ua</label>
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.com.ua</label>
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.kiev.ua</label>
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.net.ua</label>
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.org.ua</label>
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.in.ua</label>
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.biz</label>
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.com</label>
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.net</label>
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.org</label>
+         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.ru</label>
+         <a href="" class="social-item" style="padding: 5px; width: 150px">other</a>
+    </div>
+  </div>
+</div>
+<% content_for :js do %>
+<script>
+  var data = Camunda.startProcess ("search-domain", {}, (data) => {
+    console.log (data);
+  });
+</script>
+<% end %>

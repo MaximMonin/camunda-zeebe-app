@@ -29,6 +29,12 @@ uk:
   welcome:
     index:
       welcome_to_app: Ласкаво просимо в програму, що працює з Camunda и Zeebe
+  camunda:
+    index:
+      camunda_header: Пошук домена (Camunda)
+  zeebe:
+    index:
+      zeebe_header: Пошук домена (Zeebe)
   layouts:
     navbar:
       sign_in: Увійти

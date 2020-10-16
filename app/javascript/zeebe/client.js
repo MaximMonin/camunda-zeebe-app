@@ -13,8 +13,8 @@ class ZeebeClient {
   };
   async startProcess(ProcessKey, Variables, callback) {
     this.processKey = ProcessKey;
-    this.BusinessKey = ProcessKey + uuidv4();
-    await axios.post( this.url + '/process-definition/key/' + ProcessKey + '/start', {variables: variables, businessKey: BusinessKey})
+    this.BusinessKey = ProcessKey + "-" + uuidv4();
+    await axios.post( this.url + '/process-definition/key/' + ProcessKey + '/start', {variables: Variables, businessKey: this.BusinessKey})
     .then(response => {
      const data = response.data;
      console.log('Workflow instance started: ' + JSON.stringify(data));

@@ -28,4 +28,7 @@ Rails.application.routes.draw do
   authenticate :user do
     mount Sidekiq::Web => '/sidekiq'
   end
+
+  get '/camunda' => "camunda#index"
+  get '/zeebe' => "zeebe#index"
 end

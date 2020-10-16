@@ -29,6 +29,12 @@ ru:
   welcome:
     index:
       welcome_to_app: Добро пожаловать в приложение работающее с Camunda и Zeebe
+  camunda:
+    index:
+      camunda_header: Поиск домена (Camunda)
+  zeebe:
+    index:
+      zeebe_header: Поиск домена (Zeebe)
   layouts:
     navbar:
       sign_in: Войти

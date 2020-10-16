@@ -60,6 +60,12 @@ en:
   welcome:
     index:
       welcome_to_app: Welcome to Camunda and Zeebe app
+  camunda:
+    index:
+      camunda_header: Domain search (Camunda)
+  zeebe:
+    index:
+      zeebe_header: Domain search (Zeebe)
   layouts:
     navbar:
       sign_in: Sign In
