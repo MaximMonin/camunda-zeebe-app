@@ -39,7 +39,7 @@
 <% content_for :js do %>
 <script>
   var data = Camunda.startProcess ("search-domain", {}, (data) => {
-    console.log (data);
+    console.log ("ws answer: " + data);
   });
 </script>
 <% end %>
