@@ -1,4 +1,4 @@
 const { CamundaClient } = require('./client.js');
 
-const Camunda = new CamundaClient('/camunda-rest', '/camunda-ws');
+const Camunda = new CamundaClient('/camunda-ws');
 module.exports = Camunda;
