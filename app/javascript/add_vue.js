@@ -69,6 +69,7 @@ Vue.component('chat-form', require('./components/ChatForm.vue').default);
 Vue.component('my-photo', require('./components/MyPhoto.vue').default);
 Vue.component('my-video', require('./components/MyVideo.vue').default);
 Vue.component('my-docs', require('./components/MyDocs.vue').default);
+Vue.component('domain-zone', require('./components/DomainZone.vue').default);
 
 const app = new Vue({
     el: '#app',

@@ -9,30 +9,28 @@
       <button type="button" id="" class="btn btn-primary" onclick="onSearch();"><%= t(".search") %></button>
       <button type="button" class="btn btn-link" onclick="onWhois();"><%= t(".whois") %></button>
     </div>
-    <label class="col-sm-2 text-sm-right" style="padding-right: 40px; padding-top=15px; margin-top: 8px" ><%= t(".domains") %>:</label>
-    <div class="container social-box" style="margin-top: 0px; padding: 5px">
-       <div id="domains" class="box">
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.ua</label>
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.com.ua</label>
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.kiev.ua</label>
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.net.ua</label>
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.org.ua</label>
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.in.ua</label>
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.biz</label>
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.com</label>
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.net</label>
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.org</label>
-         <label class="social-item" style="padding: 5px; width: 150px"><input type="checkbox" checked="checked" value="ua" style="width: 25px">.ru</label>
-         <a href="" class="social-item" style="padding: 5px; width: 150px">other</a>
-    </div>
+    <domain-zone></domain-zone>
   </div>
 </div>
 <% content_for :js do %>
 <script>
+  // Callback from camunda through web socket
   function apiData (data) {
     console.log ("ws answer: " + data);
+    obj = JSON.parse (data);
+    if (obj.activityId && obj.activityId == 'default-zone-list') {
+      Event.emit ('defaultzones', obj.data);
+    }  
+    if (obj.activityId && obj.activityId == 'full-zone-list') {
+      Event.emit ('fullzones', obj.data);
+    }  
   };
+
+
+  // Start new camunda process
   var data = Camunda.startProcess ("search-domain", {}, apiData);
+
+  // Publish few events to camunda bpm
   function onSearch () {
     event.preventDefault(); 
     var zonelist = ['.ua', '.com.ua', '.kiev.ua'];
@@ -58,6 +56,8 @@
      }, 
      apiData);
   };
+
+  // Open camunda Cockpit to view current process execution
   function onViewProcess () {
     url = '/camunda/app/cockpit/default/#/process-instance/' + Camunda.processId;
     window.open(url,'_blank');
