@@ -29,6 +29,6 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  get '/camunda' => "camunda#index"
-  get '/zeebe' => "zeebe#index"
+  get '/camunda-bpm' => "camunda#index"
+  get '/zeebe-bpm' => "zeebe#index"
 end

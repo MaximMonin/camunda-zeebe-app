@@ -1,18 +1,13 @@
-<h4><%= t(".camunda_header") %></h4>
+<h4><%= t(".camunda_header") %></h4> 
+<a href="" onclick="onViewProcess()"><%= t(".view_camunda_process") %></a>
 <div class="container social-box" style="margin-top: 10px; padding: 5px">
   <div class="col-md-12">
     <div class="row">
-      <label class="col-sm-2 text-sm-right" style="padding-right: 30px; padding-top=15px; margin-top: 8px" ><%= t(".domain_name") %>:</label>
-      <input type="input" id="domain_name" style="margin-right: 10px" required="required" aria-required="true" type="text" class="form-control integer required col-sm-3"></input>
-      <button type="button"  class="btn btn-primary" onclick="event.preventDefault(); 
-                             var zonelist = ['.ua', '.com.ua', '.kiev.ua'];
-                             Camunda.publishMessage ('search-domain-clicked', 
-                             {
-                               searchname: {value: document.getElementById('domain_name').value}, 
-                               zonelist: {value: JSON.stringify(zonelist)}
-                             }, 
-                             apiData);"><%= t(".search") %>
-      </button>
+      <label class="col-sm-3 text-sm-right" style="padding-right: 30px; padding-top=15px; margin-top: 8px" ><%= t(".domain_name") %>:</label>
+      <input type="input" id="domain_name" style="margin-right: 10px" required="required" aria-required="true" type="text" 
+            class="form-control integer required col-sm-3" onkeypress="handleSearch(event)"></input>
+      <button type="button" id="" class="btn btn-primary" onclick="onSearch();"><%= t(".search") %></button>
+      <button type="button" class="btn btn-link" onclick="onWhois();"><%= t(".whois") %></button>
     </div>
     <label class="col-sm-2 text-sm-right" style="padding-right: 40px; padding-top=15px; margin-top: 8px" ><%= t(".domains") %>:</label>
     <div class="container social-box" style="margin-top: 0px; padding: 5px">
@@ -36,7 +31,36 @@
 <script>
   function apiData (data) {
     console.log ("ws answer: " + data);
-  }
+  };
   var data = Camunda.startProcess ("search-domain", {}, apiData);
+  function onSearch () {
+    event.preventDefault(); 
+    var zonelist = ['.ua', '.com.ua', '.kiev.ua'];
+    Camunda.publishMessage ('search-domain-clicked', 
+    {
+      searchname: {value: document.getElementById('domain_name').value}, 
+      zonelist: {value: JSON.stringify(zonelist)}
+    }, 
+    apiData);
+  };
+  function handleSearch (e) {
+    if(e.keyCode === 13){
+      e.preventDefault(); 
+      onSearch();
+    }
+  };
+  function onWhois () {
+     event.preventDefault(); 
+     var domain = 'test.com.ua';
+     Camunda.publishMessage ('whois-domain-clicked', 
+     {
+        whoisdomain: {value: domain}
+     }, 
+     apiData);
+  };
+  function onViewProcess () {
+    url = '/camunda/app/cockpit/default/#/process-instance/' + Camunda.processId;
+    window.open(url,'_blank');
+  };
 </script>
 <% end %>
