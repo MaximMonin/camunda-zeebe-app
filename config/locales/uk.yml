@@ -32,9 +32,17 @@ uk:
   camunda:
     index:
       camunda_header: Пошук домена (Camunda)
+      domain_name: Iм'я домену
+      search: Пошук
+      whois: Хто це
+      view_camunda_process: Подивитися процес Camunda
   zeebe:
     index:
       zeebe_header: Пошук домена (Zeebe)
+      domain_name: Iм'я домену
+      search: Пошук
+      whois: Хто це
+      view_zeebe_process: Подивитися процес Zeebe
   layouts:
     navbar:
       sign_in: Увійти

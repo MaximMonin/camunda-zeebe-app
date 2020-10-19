@@ -32,9 +32,17 @@ ru:
   camunda:
     index:
       camunda_header: Поиск домена (Camunda)
+      domain_name: Имя домена
+      search: Поиск
+      whois: Кто это
+      view_camunda_process: Посмотреть процесс Camunda
   zeebe:
     index:
       zeebe_header: Поиск домена (Zeebe)
+      domain_name: Имя домена
+      search: Поиск
+      whois: Кто это
+      view_zeebe_process: Посмотреть процесс Zeebe
   layouts:
     navbar:
       sign_in: Войти

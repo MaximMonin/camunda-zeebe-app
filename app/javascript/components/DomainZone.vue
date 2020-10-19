@@ -26,7 +26,7 @@
           <div v-for="zonegroup in fullzones">
             <label class="social-item" style="padding: 5px; width: auto; margin-top: 5px">
               <input type="checkbox" :checked="zonegroup.checked" style="width: 25px">
-              {{zonegroup.name}}
+              {{groupname(zonegroup.name)}}
             </label>
             <div class="container social-box" style="margin-top: 0px; padding: 5px">
               <div id="domains" class="box">
@@ -78,16 +78,32 @@ export default {
        var text = {en: 'Other zones', ru: "Другие зоны", uk: "Iнші зони" };
        return text[this.lang];
      },
+     groupname: function (group) {
+       var text = '';
+       if (group == 'ukraine_zone') {
+         text = {en: 'Ukranian domains', ru: "Украинские домены", uk: "Українські домени" };
+         return text[this.lang];
+       }
+       if (group == 'international_zone') {
+         text = {en: 'International domains', ru: "Международные домены", uk: "Mіжнародні домени" };
+         return text[this.lang];
+       }
+       if (group == 'international_new_zone') {
+         text = {en: 'International newTLD', ru: "Международные новые (newTLD)", uk: "Міжнародні нові (newTLD)" };
+         return text[this.lang];
+       }
+       return group;
+     },
      updateDefaultList (data) {
        for (var i = 0; i < data.zonelist.length; i++) {
          this.defaultzones.push({name: data.zonelist[i], checked: true});
        }       
        for (var k = 0; k < this.defaultzones.length; k++) {
          var name = this.defaultzones[k].name;
-         for (var i = 0; i < data.fullzones.length; i++) {
-           for (var j = 0; j < data.fullzone[i].items.length; j++) {
-             if (name == data.fullzone[i].items[j].name) {
-               data.fullzone[i].items[j].checked = this.defaultzones[k].checked;
+         for (var i = 0; i < this.fullzones.length; i++) {
+           for (var j = 0; j < this.fullzone[i].items.length; j++) {
+             if (name == this.fullzone[i].items[j].name) {
+               this.fullzone[i].items[j].checked = this.defaultzones[k].checked;
              }
            }
          }

@@ -14,8 +14,8 @@ module App
     config.load_defaults 6.0
 
     config.i18n.available_locales = [:en, :ru, :uk]
-    config.i18n.default_locale = :en
-    config.i18n.locale = :en
+    config.i18n.default_locale = :ru
+    config.i18n.locale = :ru
 
     config.action_cable.mount_path = '/websocket'
     config.action_cable.allowed_request_origins = ['https://' + ENV['VIRTUAL_HOST'], 'http://railstest']

@@ -63,9 +63,17 @@ en:
   camunda:
     index:
       camunda_header: Domain search (Camunda)
+      domain_name: Domain Name
+      search: Search
+      whois: Whois
+      view_camunda_process: View Camunda process
   zeebe:
     index:
       zeebe_header: Domain search (Zeebe)
+      domain_name: Domain Name
+      search: Search
+      whois: Whois
+      view_zeebe_process: View Zeebe process
   layouts:
     navbar:
       sign_in: Sign In

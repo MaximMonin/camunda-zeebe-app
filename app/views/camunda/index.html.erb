@@ -3,13 +3,13 @@
 <div class="container social-box" style="margin-top: 10px; padding: 5px">
   <div class="col-md-12">
     <div class="row">
-      <label class="col-sm-3 text-sm-right" style="padding-right: 30px; padding-top=15px; margin-top: 8px" ><%= t(".domain_name") %>:</label>
+      <label class="col-sm-3 text-sm-right" style="margin-top: 8px" ><%= t(".domain_name") %>:</label>
       <input type="input" id="domain_name" style="margin-right: 10px" required="required" aria-required="true" type="text" 
             class="form-control integer required col-sm-3" onkeypress="handleSearch(event)"></input>
       <button type="button" id="" class="btn btn-primary" onclick="onSearch();"><%= t(".search") %></button>
-      <button type="button" class="btn btn-link" onclick="onWhois();"><%= t(".whois") %></button>
     </div>
     <domain-zone></domain-zone>
+    <domain-list></domain-list>
   </div>
 </div>
 <% content_for :js do %>
@@ -24,19 +24,31 @@
     if (obj.activityId && obj.activityId == 'full-zone-list') {
       Event.emit ('fullzones', obj.data);
     }  
+    if (obj.activityId && obj.activityId == 'get-domains-data') {
+      Event.emit ('domainslist', obj.data);
+    }  
+    if (obj.activityId && obj.activityId == 'get-domains-data-full') {
+      Event.emit ('domainsdata', obj.data);
+    }  
+    if (obj.activityId && obj.activityId == 'get-whois-data') {
+      alert (obj.data);
+    }  
   };
 
 
-  // Start new camunda process
+  // Start new camunda process on page load
   var data = Camunda.startProcess ("search-domain", {}, apiData);
 
   // Publish few events to camunda bpm
   function onSearch () {
     event.preventDefault(); 
+    var searchname = document.getElementById('domain_name').value;
+    if (searchname == "") {
+      return;
+    }
     var zonelist = ['.ua', '.com.ua', '.kiev.ua'];
-    Camunda.publishMessage ('search-domain-clicked', 
-    {
-      searchname: {value: document.getElementById('domain_name').value}, 
+    Camunda.publishMessage ('search-domain-clicked', {
+      searchname: {value: searchname}, 
       zonelist: {value: JSON.stringify(zonelist)}
     }, 
     apiData);
@@ -47,17 +59,23 @@
       onSearch();
     }
   };
-  function onWhois () {
-     event.preventDefault(); 
-     var domain = 'test.com.ua';
-     Camunda.publishMessage ('whois-domain-clicked', 
-     {
+  Event.listen('whois-clicked', (data) => {
+     var domain = data;
+     Camunda.publishMessage ('whois-domain-clicked', {
         whoisdomain: {value: domain}
      }, 
      apiData);
-  };
-
-  // Open camunda Cockpit to view current process execution
+  });
+  Event.listen('register-clicked', (data) => {
+     var domains = data;
+     Camunda.publishMessage ('register-domain-clicked', {
+        domainlist: {value: domains}
+     }, 
+     apiData);
+     alert ("Бизнес процесс выбора домена завершен.\nДля регистрации выбраны следующие домены: " + JSON.stringify(domains));
+  });
+ 
+   // Open camunda Cockpit to view current process execution
   function onViewProcess () {
     url = '/camunda/app/cockpit/default/#/process-instance/' + Camunda.processId;
     window.open(url,'_blank');
