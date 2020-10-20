@@ -70,8 +70,12 @@ export default {
      },
      domainstatus: function (status) {
        var text = status;
-       if (status == 'no-data') {
+       if (status == 'no data') {
          text = {en: 'No Data', ru: "Нет данных", uk: "Нет даних" };
+         return text[this.lang];
+       }
+       if (status == 'error') {
+         text = {en: 'Error', ru: "Ошибка", uk: "Помилка" };
          return text[this.lang];
        }
        if (status == 'busy') {

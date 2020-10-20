@@ -14,7 +14,7 @@
            <div class="container social-box" style="margin-top: 0px; padding: 5px">
              <div id="defdomains" class="box" >
                <label class="social-item" style="padding: 5px; width: 150px; margin-bottom: 0px;" v-for="zone in defaultzones">
-                  <input type="checkbox" :checked="zone.checked" style="width: 25px">
+                  <input type="checkbox" :checked="zone.checked" style="width: 25px" @change="onchangedefault($event, zone.name)">
                   {{zone.name}}
                </label>
              </div>
@@ -25,13 +25,13 @@
         <div class="myfiles2">
           <div v-for="zonegroup in fullzones">
             <label class="social-item" style="padding: 5px; width: auto; margin-top: 5px">
-              <input type="checkbox" :checked="zonegroup.checked" style="width: 25px">
+              <input type="checkbox" :checked="zonegroup.checked" style="width: 25px" @change="onchangezonegroup($event, zonegroup.name)">
               {{groupname(zonegroup.name)}}
             </label>
             <div class="container social-box" style="margin-top: 0px; padding: 5px">
               <div id="domains" class="box">
                 <label class="social-item" style="padding: 5px; width: 200px; margin-bottom: 0px;" v-for="zone in zonegroup.items">
-                  <input type="checkbox" :checked="zone.checked" style="width: 25px">
+                  <input type="checkbox" :checked="zone.checked" style="width: 25px" @change="onchangezoneitem($event, zone.name)">
                   {{zone.name}}
                 </label>
               </div>
@@ -101,9 +101,9 @@ export default {
        for (var k = 0; k < this.defaultzones.length; k++) {
          var name = this.defaultzones[k].name;
          for (var i = 0; i < this.fullzones.length; i++) {
-           for (var j = 0; j < this.fullzone[i].items.length; j++) {
-             if (name == this.fullzone[i].items[j].name) {
-               this.fullzone[i].items[j].checked = this.defaultzones[k].checked;
+           for (var j = 0; j < this.fullzones[i].items.length; j++) {
+             if (name == this.fullzones[i].items[j].name) {
+               this.fullzones[i].items[j].checked = this.defaultzones[k].checked;
              }
            }
          }
@@ -123,6 +123,50 @@ export default {
          }
          this.fullzones.push({name: data.zonelist[i].name, checked: false, items: obj});
        }       
+     },
+     onchangedefault: function (e, zone) {
+       for (var k = 0; k < this.defaultzones.length; k++) {
+         if (this.defaultzones[k].name == zone) {
+           this.defaultzones[k].checked = e.target.checked;
+           for (var i = 0; i < this.fullzones.length; i++) {
+             for (var j = 0; j < this.fullzones[i].items.length; j++) {
+               if (zone == this.fullzones[i].items[j].name) {
+                 this.fullzones[i].items[j].checked = this.defaultzones[k].checked;
+               }
+             }
+           }
+         }
+       }
+     },
+     onchangezonegroup: function (e, zonegroup) {
+       for (var i = 0; i < this.fullzones.length; i++) {
+         if (this.fullzones[i].name == zonegroup)
+         {
+           for (var j = 0; j < this.fullzones[i].items.length; j++) {
+             this.fullzones[i].items[j].checked = e.target.checked;
+             for (var k = 0; k < this.defaultzones.length; k++) {
+               if (this.fullzones[i].items[j].name == this.defaultzones[k].name) {
+                this.defaultzones[k].checked = this.fullzones[i].items[j].checked;
+               }
+             }
+           }
+         }
+       }
+     },
+     onchangezoneitem: function (e, zone) {
+       for (var i = 0; i < this.fullzones.length; i++) {
+         for (var j = 0; j < this.fullzones[i].items.length; j++) {
+           if (this.fullzones[i].items[j].name == zone)
+           {
+             this.fullzones[i].items[j].checked = e.target.checked;
+             for (var k = 0; k < this.defaultzones.length; k++) {
+               if (this.fullzones[i].items[j].name == this.defaultzones[k].name) {
+                this.defaultzones[k].checked = this.fullzones[i].items[j].checked;
+               }
+             }
+           }
+         }
+       }
      },
   },
 };

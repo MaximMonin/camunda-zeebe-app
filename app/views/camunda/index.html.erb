@@ -62,7 +62,10 @@
       return;
     }
     document.getElementById('defaultzones-tab').click();
-    var zonelist = ['.ua', '.com.ua', '.kiev.ua'];
+
+    // Get Vue.js zonelist
+    
+    var zonelist = getSelectedZones ();
     Camunda.publishMessage ('search-domain-clicked', {
       searchname: {value: searchname}, 
       zonelist: {value: JSON.stringify(zonelist)}
@@ -94,8 +97,25 @@
  
    // Open camunda Cockpit to view current process execution
   function onViewProcess () {
+    event.preventDefault(); 
     url = '/camunda/app/cockpit/default/#/process-instance/' + Camunda.processId;
     window.open(url,'_blank');
   };
+
+  // Get data from Vue.js
+  function getSelectedZones () {
+    var zones = new Array ();
+    var obj = Vue.$children[1].$vnode.componentInstance.fullzones;
+
+    for (var i = 0; i < obj.length; i++) {
+      for (var j = 0; j < obj[i].items.length; j++) {
+        if (obj[i].items[j].checked == true)
+        {
+          zones.push (obj[i].items[j].name);
+        }
+      }
+    }
+    return zones;
+  }
 </script>
 <% end %>
