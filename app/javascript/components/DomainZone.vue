@@ -2,10 +2,10 @@
 <div>
     <ul class="nav nav-tabs" style="padding-top: 10px;">
       <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#defaultzones">{{ defaultzonelist ()}}</a>
+        <a class="nav-link active" id="defaultzones-tab" data-toggle="tab" href="#defaultzones">{{ defaultzonelist ()}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#allzones" onclick="">{{ fullzonelist ()}}</a>
+        <a class="nav-link" id="allzones-tab" data-toggle="tab" href="#allzones" onclick="">{{ fullzonelist ()}}</a>
       </li>
     </ul>
     <div class="tab-content">

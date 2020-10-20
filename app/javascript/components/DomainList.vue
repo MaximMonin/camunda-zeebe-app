@@ -3,17 +3,25 @@
   <div class="myfiles2" v-if="domains.length > 0">
      <label class="social-item" style="padding: 5px; width: auto; margin-top: 5px">
         {{registertext()}}
+        <button type="button" class="btn btn-link" @click="clear();">{{clearbutton()}}</button>
      </label>
      <div class="container social-box" style="margin-top: 0px; padding: 5px">
        <div id="domains" class="box" v-for="domain in domains">
-         <a class="social-item" style="padding: 5px; width: 300px; margin-bottom: 0px;">
-            <input type="checkbox" :disabled="domain.disabled" :checked="domain.checked" @change="onchange($event, domain.name)" style="width: 25px">
-            {{domain.name}}
+         <a :href="'http://' + domain.name" @click="open(domain.name);" class="social-item" style="padding: 3px; width: 250px; margin-bottom: 0px;" v-if="domain.status == 'busy'">
+            <input type="checkbox" :disabled="domain.disabled" :checked="domain.checked" style="width: 25px">{{domain.name}}
          </a>
-         <a href="" @click="whois(domain.name);">{{whoistext()}}</a>
+         <p class="social-item" style="padding: 3px; width: 250px; margin-bottom: 0px;" v-else>
+            <input type="checkbox" :disabled="domain.disabled" :checked="domain.checked" @change="onchange($event, domain.name)" style="width: 25px">{{domain.name}}
+         </p>
+         <span style="color:green;" v-if="domain.status == 'free'">{{domainstatus(domain.status)}}</span>
+         <span style="color:red;"   v-else-if="domain.status == 'busy'">{{domainstatus(domain.status)}}</span>
+         <span style=""             v-else>{{domainstatus(domain.status)}}</span>
+         <a href="" @click="whois(domain.name);" v-if="domain.status == 'busy'">{{whoistext()}}</a>
        </div>
      </div>
-     <button type="button" class="btn btn-primary" @click="register();">{{registerbutton()}}</button>
+     <div class="box" style="text-align: center; margin-top: 10px; margin-bottom: 10px;" >
+        <button type="button" class="btn btn-primary" @click="register();">{{registerbutton()}}</button>
+     </div>
   </div>
 
 </div>
@@ -49,12 +57,35 @@ export default {
        return text[this.lang];
      },
      whoistext: function () {
-       var text = {en: 'Who is', ru: "Кто это", uk: "Хто це" };
+       var text = {en: 'WhoIs', ru: "Кто", uk: "Хто" };
        return text[this.lang];
      },
      registerbutton: function () {
        var text = {en: 'REGISTER', ru: "ЗАРЕГИСТРИРОВАТЬ", uk: "ЗАРЕЄСТРУВАТИ" };
        return text[this.lang];
+     },
+     clearbutton: function () {
+       var text = {en: 'Clear list', ru: "Очистить", uk: "Очистити" };
+       return text[this.lang];
+     },
+     domainstatus: function (status) {
+       var text = status;
+       if (status == 'no-data') {
+         text = {en: 'No Data', ru: "Нет данных", uk: "Нет даних" };
+         return text[this.lang];
+       }
+       if (status == 'busy') {
+         text = {en: 'Busy', ru: "Занят", uk: "Зайнятий" };
+         return text[this.lang];
+       }
+       if (status == 'free') {
+         text = {en: 'Free', ru: "Свободен", uk: "Вільний" };
+         return text[this.lang];
+       }
+       return status;
+     },   
+     clear: function () {
+       this.domains = [];
      },
      updatelist (data) {
        for (var i = 0; i < data.length; i++) {
@@ -93,6 +124,10 @@ export default {
      whois: function (domain) {
        event.preventDefault(); 
        Event.emit('whois-clicked', domain);
+     },
+     open: function (domain) {
+       event.preventDefault(); 
+       window.open('http://' + domain,'_blank');
      },
   },
 };

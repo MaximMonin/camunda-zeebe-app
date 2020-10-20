@@ -15,6 +15,7 @@
 <% content_for :js do %>
 <script>
   // Callback from camunda through web socket
+  // Redirect data to Vue.js frontend components
   function apiData (data) {
     console.log ("ws answer: " + data);
     obj = JSON.parse (data);
@@ -33,19 +34,25 @@
     if (obj.activityId && obj.activityId == 'get-whois-data') {
       alert (obj.data);
     }  
+    if (obj.activityId && obj.activityId == 'domain-register-notify') {
+      alert (obj.data.info);
+    }  
+    if (obj.activityId && obj.activityId == 'domain-stop-session') {
+      alert (obj.data.info);
+    }  
   };
-
 
   // Start new camunda process on page load
   var data = Camunda.startProcess ("search-domain", {}, apiData);
 
-  // Publish few events to camunda bpm
+  // Publish messages with data to camunda bpm
   function onSearch () {
     event.preventDefault(); 
     var searchname = document.getElementById('domain_name').value;
     if (searchname == "") {
       return;
     }
+    document.getElementById('defaultzones-tab').click();
     var zonelist = ['.ua', '.com.ua', '.kiev.ua'];
     Camunda.publishMessage ('search-domain-clicked', {
       searchname: {value: searchname}, 
@@ -59,6 +66,8 @@
       onSearch();
     }
   };
+
+  // Events from Vue.js frontend
   Event.listen('whois-clicked', (data) => {
      var domain = data;
      Camunda.publishMessage ('whois-domain-clicked', {
@@ -67,12 +76,11 @@
      apiData);
   });
   Event.listen('register-clicked', (data) => {
-     var domains = data;
+     var domains = JSON.stringify(data);
      Camunda.publishMessage ('register-domain-clicked', {
         domainlist: {value: domains}
      }, 
      apiData);
-     alert ("Бизнес процесс выбора домена завершен.\nДля регистрации выбраны следующие домены: " + JSON.stringify(domains));
   });
  
    // Open camunda Cockpit to view current process execution
