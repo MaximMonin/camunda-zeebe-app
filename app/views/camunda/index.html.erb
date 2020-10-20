@@ -35,10 +35,19 @@
       alert (obj.data);
     }  
     if (obj.activityId && obj.activityId == 'domain-register-notify') {
+      // Process successful
       alert (obj.data.info);
+      // Close websocket connection and redirect to home page
+      Camunda.disconnect ();
+      window.location.replace("/");
     }  
+
     if (obj.activityId && obj.activityId == 'domain-stop-session') {
+      // Timeout message (process stopped)
       alert (obj.data.info);
+      // Close websocket connection and redirect to home page
+      Camunda.disconnect ();
+      window.location.replace("/");
     }  
   };
 
