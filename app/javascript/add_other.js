@@ -17,4 +17,3 @@ if (document.querySelector("meta[name='csrf-token']"))
 window.ImmediateUploader = require('./upload');
 
 window.Camunda = require('./camunda');
-window.Zeebe = require('./zeebe');

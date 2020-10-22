@@ -1,1 +1,135 @@
-<h3><%= t(".zeebe_header") %></h3>
+<h4><%= t(".zeebe_header") %></h4> 
+<a href="" onclick="onViewProcess()"><%= t(".view_zeebe_process") %></a>
+<div class="container social-box" style="margin-top: 10px; padding: 5px">
+  <div class="col-md-12">
+    <div class="row">
+      <label class="col-sm-3 text-sm-right" style="margin-top: 8px" ><%= t(".domain_name") %>:</label>
+      <input type="input" id="domain_name" style="margin-right: 10px" required="required" aria-required="true" type="text" 
+            class="form-control integer required col-sm-3" onkeypress="handleSearch(event)"></input>
+      <button type="button" id="" class="btn btn-primary" onclick="onSearch();"><%= t(".search") %></button>
+    </div>
+    <domain-zone></domain-zone>
+    <domain-list></domain-list>
+  </div>
+</div>
+<button type="button" id= "modal-button" class="btn btn-primary btn-lg" style="display: none" data-toggle="modal" data-target="#myModal"></button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" aligment="right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body" id="modal-html">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :js do %>
+<script>
+  // Callback from zeebe through web socket
+  // Redirect data to Vue.js frontend components
+  function apiData (data) {
+    console.log ("ws answer: " + data);
+    obj = JSON.parse (data);
+    if (obj.activityId && obj.activityId == 'default-zone-list') {
+      Event.emit ('defaultzones', obj.data);
+    }  
+    if (obj.activityId && obj.activityId == 'full-zone-list') {
+      Event.emit ('fullzones', obj.data);
+    }  
+    if (obj.activityId && obj.activityId == 'get-domains-data') {
+      Event.emit ('domainslist', obj.data);
+    }  
+    if (obj.activityId && obj.activityId == 'get-domains-data-full') {
+      Event.emit ('domainsdata', obj.data);
+    }  
+    if (obj.activityId && obj.activityId == 'get-whois-data') {
+      document.getElementById('modal-html').innerHTML = '<div>' + obj.data + '</div>';
+      document.getElementById('modal-button').click();
+    }  
+    if (obj.activityId && obj.activityId == 'domain-register-notify') {
+      // Process successful
+      alert (obj.data.info);
+      // Close websocket connection and redirect to home page
+      Camunda.disconnect ();
+      window.location.replace("/");
+    }  
+
+    if (obj.activityId && obj.activityId == 'domain-stop-session') {
+      // Timeout message (process stopped)
+      alert (obj.data.info);
+      // Close websocket connection and redirect to home page
+      Camunda.disconnect ();
+      window.location.replace("/");
+    }  
+  };
+
+  // Start new zeebe process on page load
+  var data = Camunda.setUrl('/zeebe-ws').startProcess ("search-domain", {}, apiData);
+
+  // Publish messages with data to zeebe bpm
+  function onSearch () {
+    event.preventDefault(); 
+    var searchname = document.getElementById('domain_name').value;
+    if (searchname == "") {
+      return;
+    }
+    document.getElementById('defaultzones-tab').click();
+
+    // Get Vue.js zonelist
+    
+    var zonelist = getSelectedZones ();
+    Camunda.publishMessage ('search-domain-clicked', {
+      searchname: {value: searchname}, 
+      zonelist: {value: JSON.stringify(zonelist)}
+    }, 
+    apiData);
+  };
+  function handleSearch (e) {
+    if(e.keyCode === 13){
+      e.preventDefault(); 
+      onSearch();
+    }
+  };
+
+  // Events from Vue.js frontend
+  Event.listen('whois-clicked', (data) => {
+     var domain = data;
+     Camunda.publishMessage ('whois-domain-clicked', {
+        whoisdomain: {value: domain}
+     }, 
+     apiData);
+  });
+  Event.listen('register-clicked', (data) => {
+     var domains = JSON.stringify(data);
+     Camunda.publishMessage ('register-domain-clicked', {
+        domainlist: {value: domains}
+     }, 
+     apiData);
+  });
+ 
+   // Open Zeebe Operate to view current process execution
+  function onViewProcess () {
+    event.preventDefault(); 
+//    url = '/camunda/app/cockpit/default/#/process-instance/' + Camunda.processId;
+    window.open(url,'_blank');
+  };
+
+  // Get data from Vue.js
+  function getSelectedZones () {
+    var zones = new Array ();
+    var obj = Vue.$children[1].$vnode.componentInstance.fullzones;
+
+    for (var i = 0; i < obj.length; i++) {
+      for (var j = 0; j < obj[i].items.length; j++) {
+        if (obj[i].items[j].checked == true)
+        {
+          zones.push (obj[i].items[j].name);
+        }
+      }
+    }
+    return zones;
+  }
+</script>
+<% end %>

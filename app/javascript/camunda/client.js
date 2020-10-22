@@ -8,7 +8,7 @@ class CamundaClient {
     this.callback = null;
   };
   setUrl (url) {
-    url = this.transfromUrl (url);
+    url = this.transformUrl (url);
     if (this.url != url) {
       if (this.socket && this.socket.readyState == 1) {
         this.socket.close ();
