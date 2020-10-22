@@ -1,4 +1,4 @@
-// Camunda web client to websocket server
+// Camunda and Zeebe web client to websocket server
 
 class CamundaClient {
   constructor(url) {

@@ -112,7 +112,7 @@
    // Open Zeebe Operate to view current process execution
   function onViewProcess () {
     event.preventDefault(); 
-//    url = '/camunda/app/cockpit/default/#/process-instance/' + Camunda.processId;
+    url = '/zeebe/#/instances/' + Camunda.processId;
     window.open(url,'_blank');
   };
 
